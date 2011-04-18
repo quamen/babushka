@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>heroku.rb</title>
+  <link rel="stylesheet" href="http://github.com/jashkenas/docco/raw/0.3.0/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>heroku.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>Example babushka deps for setting up a heroku like development environment.</p>
+
+<p> Add this file to your applications babushka-deps director and run babushka from the root directory.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-heroku-dev'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-heroku-dev">&#182;</a>
+        </div>
+        <h3>heroku-dev</h3>
+
+<p>A top level dependency. Doesn&rsquo;t do anything, just requires all of the other deps.
+Installs rvm, ruby 1.9.2, memcached and postgresql.
+Creates a gemset for the project.</p>
+
+<p>Run with:</p>
+
+<pre><code>babushka heroku-dev
+</code></pre>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">dep</span> <span class="s1">&#39;heroku-dev&#39;</span> <span class="k">do</span>
+  <span class="n">requires</span> <span class="s1">&#39;rvm&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;ruby-1.9.2 installed&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;gemset ruby-1.9.2-p180@heroku&#39;</span>
+           <span class="s1">&#39;memcached.managed&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;postgresql.managed&#39;</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Managed_dependencies.'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Managed_dependencies.">&#182;</a>
+        </div>
+        <h3>Managed dependencies.</h3>
+
+<p>Uses the .managed meta dependency that comes with babushka.</p>
+
+<p>Memcached and Postgresql will be installed using your locally available
+package management tool: homebrew, apt, yum and pacman.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">dep</span> <span class="s1">&#39;memcached.managed&#39;</span>
+<span class="n">dep</span> <span class="s1">&#39;postgresql.managed&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-gemset_ruby-1.9.2-p180@heroku'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-gemset_ruby-1.9.2-p180@heroku">&#182;</a>
+        </div>
+        <h3>gemset ruby-1.9.2-p180@heroku</h3>
+
+<p>Note as this dep ends in  it inherits from the :rvm meta dependency defined above.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">dep</span> <span class="s1">&#39;gemset ruby-1.9.2-p180@heroku&#39;</span> <span class="k">do</span>
+  <span class="n">requires</span> <span class="s1">&#39;rvm&#39;</span><span class="p">,</span> 
+           <span class="s1">&#39;ruby-1.9.2 installed&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Consider this dependency met if the output of <em>rvm info</em> contains the string <em>&ldquo;ruby-1.9.2-p180@heroku&rdquo;</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">met?</span> <span class="p">{</span> 
+    <span class="n">shell</span><span class="p">(</span><span class="s1">&#39;rvm info&#39;</span><span class="p">)</span><span class="o">[</span><span class="s1">&#39;ruby-1.9.2-p180@heroku&#39;</span><span class="o">]</span>
+  <span class="p">}</span> 
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>To meet this dependency run <em>&lsquo;rvm &mdash;create use  &ldquo;ruby-1.9.2-p180@heroku&rdquo;&rsquo;</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">meet</span> <span class="p">{</span> 
+    <span class="n">shell</span><span class="p">(</span><span class="s1">&#39;rvm --create use  &quot;ruby-1.9.2-p180@heroku&quot;&#39;</span><span class="p">)</span> 
+  <span class="p">}</span>
+  
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Install_Ruby_1.9.2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Install_Ruby_1.9.2">&#182;</a>
+        </div>
+        <h3>Install Ruby 1.9.2</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">dep</span> <span class="s1">&#39;ruby-1.9.2 installed&#39;</span> <span class="k">do</span>
+  <span class="n">requires</span> <span class="s1">&#39;rvm&#39;</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>Consider this dependency met if the output of <em>rvm list</em> contains the string <em>&ldquo;ruby-1.9.2-p180&rdquo;</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">met?</span> <span class="p">{</span> 
+    <span class="n">shell</span><span class="p">(</span><span class="s1">&#39;rvm list&#39;</span><span class="p">)</span><span class="o">[</span><span class="s1">&#39;ruby-1.9.2-p180&#39;</span><span class="o">]</span> 
+  <span class="p">}</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>To meet this dependency run <em>&lsquo;rvm install ruby-1.9.2-p180&rsquo;</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">meet</span> <span class="p">{</span> </pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>Prints <em>&ldquo;rvm install ruby-1.9.2-p180&rdquo;</em> and opens a level of indentation in the
+babushka console output.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">log</span><span class="p">(</span><span class="s2">&quot;rvm install ruby-1.9.2-p180&quot;</span><span class="p">)</span> <span class="p">{</span> 
+      <span class="n">shell</span><span class="p">(</span><span class="s1">&#39;rvm install ruby-1.9.2-p180&#39;</span><span class="p">)</span> 
+    <span class="p">}</span> 
+  <span class="p">}</span>
+  
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Install_Ruby_Version_Manager'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Install_Ruby_Version_Manager">&#182;</a>
+        </div>
+        <h3>Install Ruby Version Manager</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">dep</span> <span class="s1">&#39;rvm&#39;</span> <span class="k">do</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-12">&#182;</a>
+        </div>
+        <p>Consider this dependency met if the output of <em>rvm -v</em> contains the string <em>&ldquo;rvm&rdquo;</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">met?</span> <span class="p">{</span> 
+    <span class="n">login_shell</span><span class="p">(</span><span class="s1">&#39;rvm -v&#39;</span><span class="p">)</span><span class="o">[</span><span class="s1">&#39;rvm&#39;</span><span class="o">]</span>
+  <span class="p">}</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
+        </div>
+        <p>To meet this dependency install rvm.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">meet</span> <span class="p">{</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-14'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-14">&#182;</a>
+        </div>
+        <p>Stop babushka and wait for the user to choose to install rvm system-wide or not.
+Default to installing locally.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">if</span> <span class="n">confirm</span><span class="p">(</span><span class="s2">&quot;Install rvm system-wide?&quot;</span><span class="p">,</span> <span class="ss">:default</span> <span class="o">=&gt;</span> <span class="s1">&#39;n&#39;</span><span class="p">)</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-15">&#182;</a>
+        </div>
+        <p>Use log_shell to print <em>&ldquo;Installing rvm using rvm-install-system-wide&rdquo;</em> and then
+run <em>&lsquo;bash &lt; &lt;( curl -L http://bit.ly/rvm-install-system-wide )&rsquo;</em> to install rvm
+sytem wide.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="n">log_shell</span><span class="p">(</span><span class="s2">&quot;Installing rvm using rvm-install-system-wide&quot;</span><span class="p">,</span> 
+                <span class="s1">&#39;bash &lt; &lt;( curl -L http://bit.ly/rvm-install-system-wide )&#39;</span><span class="p">)</span>
+      
+      </pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
+        </div>
+        <p>Otherwise use log_shell to print <em>&ldquo;Installing rvm using rvm-install-system-wide&rdquo;</em> and then
+run <em>&lsquo;bash -c &ldquo;<code>curl http://rvm.beginrescueend.com/releases/rvm-install-head</code>&rdquo;&rsquo;</em>
+to install rvm for the local user.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">else</span>
+      <span class="n">log_shell</span><span class="p">(</span><span class="s2">&quot;Installing rvm using rvm-install-head&quot;</span><span class="p">,</span> 
+                <span class="s1">&#39;bash -c &quot;`curl http://rvm.beginrescueend.com/releases/rvm-install-head`&quot;&#39;</span><span class="p">)</span>
+      
+    <span class="k">end</span>
+  <span class="p">}</span>
+  
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
